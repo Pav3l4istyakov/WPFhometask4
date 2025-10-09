@@ -10,34 +10,30 @@ namespace WPFhometask4
 {
     public class ToDo
     {
-        private string title;
-        private DateTime dueDate;
-        private string description;
+        private string caseTitle;
+        private DateTime completionDate;
+        private string caseDescription;
 
-        public ToDo(string title, DateTime dueDate, string description)
+        public ToDo(string casetitle, DateTime completiondate, string casedescription)
         {
-            this.title = title;
-            this.dueDate = dueDate;
-            this.description = description;
+            this.caseTitle = casetitle;
+            this.completionDate = completiondate;
+            this.caseDescription = casedescription;
         }
 
-        public string Title
+        public string CaseTitle
         {
-            get { return title; }
-            set { title = value; }
+           get { return caseTitle; }
         }
 
-        public DateTime DueDate
+        public DateTime CompletionDate_
         {
-            get { return dueDate; }
-            set { dueDate = value; }
+           get { return completionDate; }
         }
 
         public string Description
         {
-            get { return description; }
-            set { description = value; }
+           get { return caseDescription; }
         }
     }
-
 }

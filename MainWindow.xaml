@@ -5,57 +5,46 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPFhometask4"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800" Background="#FDF5DF">
     <Grid>
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"></RowDefinition>
-                <RowDefinition></RowDefinition>
-                <RowDefinition Height="Auto"></RowDefinition>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-            <TextBlock Grid.Row="0" Grid.Column="0" Text="Список дел" FontSize="26" HorizontalAlignment="Center" />
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <TextBlock Grid.Row="0" Grid.Column="0" Text="Список дел" FontSize="26" HorizontalAlignment="Center"/>
+        <ListBox Grid.Row="1" Grid.Column="0" Margin="5" Background="#FDF5DF" Name="TaskListListBox">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Margin="5">
+                        <TextBlock Text="{Binding CaseTitle}" FontSize="12" FontWeight="Bold"/>
+                        <TextBlock Text="{Binding CompletionDate_, StringFormat=dd.MM.yyyy}" FontSize="12"/>
+                        <TextBlock Text="{Binding Description}" FontSize="10" TextWrapping="Wrap"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
 
-            <ScrollViewer Grid.Row="1" Grid.Column="0" Margin="5" Background="#FDF5DF" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-                <TextBlock Margin="5" >
-            <Run FontSize="12">Приготовить покушать</Run>
-            <LineBreak/>
-            <Run FontSize="12">15.01.2024</Run>
-            <LineBreak/>
-            <Run FontSize="10">Нет описания</Run>
-            <LineBreak/>
-            <Run FontSize="12">Поработать</Run>
-            <LineBreak/>
-            <Run FontSize="12">20.01.2024</Run>
-            <LineBreak/>
-            <Run FontSize="10">Съездить на совещание в Москву</Run>
-            <LineBreak/>
-            <Run FontSize="12">Отдохнуть</Run>
-            <LineBreak/>
-            <Run FontSize="12">01.02.2024</Run>
-            <LineBreak/>
-            <Run FontSize="10">Съездить в отпуск в Сочи</Run>
-            <LineBreak/>
-                </TextBlock>
-            </ScrollViewer>
+        <CheckBox Grid.Column="1" Grid.Row="0" Content="Добавление новых дел" VerticalAlignment="Bottom"
+                  Name="AddTasksCheckBox" Checked="AddTasksCheckBox_Checked" Unchecked="AddTasksCheckBox_Unchecked"/>
 
-            <CheckBox Grid.Column="1" Grid.Row="0" Content="Добавление новых дел" IsChecked="True" VerticalAlignment="Bottom"/>
-
-            <ScrollViewer Grid.Column="1" Grid.Row="1" Margin="5" Background="#FDF5DF" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-                <StackPanel Margin="5">
-                    <TextBlock FontSize="12" Text="Название:" />
-                    <TextBox Margin="0, 10"></TextBox>
-                    <TextBlock FontSize="12" Text="Выполнить до:"/>
-                    <DatePicker Margin="0, 10" ></DatePicker>
-                    <TextBlock FontSize="12" Text="Описание:"/>
-                    <TextBox Margin="0, 10" MaxLines="10" MinLines="10" ></TextBox>
-                </StackPanel>
-            </ScrollViewer>
-            <Button Grid.Column="0" Grid.Row="2" Content="Удалить дела" Background="#5EBEC4" Height="30" Width="100" Margin="5"/>
-            <Button Grid.Column="1" Grid.Row="2" Content="Добавить дело" Background="#5EBEC4" Height="30" Width="100" Margin="5"/>
-        </Grid>
+        <ScrollViewer Grid.Column="1" Grid.Row="1" Margin="5" Background="#FDF5DF" 
+            HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"
+                      Name="AddTasksPanel" Visibility="Collapsed">
+            <StackPanel Margin="5">
+                <TextBlock FontSize="12" Text="Название:"/>
+                <TextBox Margin="0,10" Name="TitleTextBox"/>
+                <TextBlock FontSize="12" Text="Выполнить до:"/>
+                <DatePicker Margin="0,10" Name="DueDatePicker"/>
+                <TextBlock FontSize="12" Text="Описание:"/>
+                <TextBox Margin="0, 10" MaxLines="10" MinLines="10" Name="DescriptionTextBox"/>
+            </StackPanel>
+        </ScrollViewer>
+        <Button Grid.Column="0" Grid.Row="2" Content="Удалить дело" Background="#5EBEC4" Height="30" Width="100" Margin="5" Click="DeleteButton_Click"/>
+        <Button Grid.Column="1" Grid.Row="2" Content="Добавить дело" Background="#5EBEC4" Height="30" Width="100" Margin="5" Click="AddButton_Click"/>
     </Grid>
 </Window>
