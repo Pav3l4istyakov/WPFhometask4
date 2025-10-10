@@ -8,4 +8,16 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Image\add.png" />
+    <None Remove="Image\delete.png" />
+    <None Remove="Image\icon.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Image\add.png" />
+    <Resource Include="Image\delete.png" />
+    <Resource Include="Image\icon.png" />
+  </ItemGroup>
+
 </Project>
