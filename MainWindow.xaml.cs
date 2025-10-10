@@ -17,33 +17,32 @@ namespace WPFhometask4
     /// </summary>
     public partial class MainWindow : Window
     {
-        private List<ToDo> todoList = new List<ToDo>();
+        private List<ToDo> ToDoList = new List<ToDo>();
 
         public MainWindow()
         {
             InitializeComponent();
-            
-            todoList.Add(new ToDo("Приготовить покушать", new DateTime(2024, 1, 15), "нет описания"));
-            todoList.Add(new ToDo("Поработать", new DateTime(2024, 1, 20), "Съездить на совещание в Москву"));
-            todoList.Add(new ToDo("Отдохнуть", new DateTime(2024, 2, 1), "Съездить в отпуск в Сочи"));
+            ToDoList.Add(new ToDo("Приготовить покушать", new DateTime(2024, 1, 15), "нет описания"));
+            ToDoList.Add(new ToDo("Поработать", new DateTime(2024, 1, 20), "Съездить на совещание в Москву"));
+            ToDoList.Add(new ToDo("Отдохнуть", new DateTime(2024, 2, 1), "Съездить в отпуск в Сочи"));
             UpdateTaskList(); 
         }
 
         private void AddButton_Click(object sender, RoutedEventArgs e) 
         {
-            string title = TitleTextBox.Text;
-            DateTime? dueDate = DueDatePicker.SelectedDate;
-            string description = DescriptionTextBox.Text;
+            string Title = TitleTextBox.Text;
+            DateTime? DueDate = DueDatePicker.SelectedDate;
+            string Description = DescriptionTextBox.Text;
 
-            if (string.IsNullOrEmpty(title) || dueDate == null)
+            if (string.IsNullOrEmpty(Title) || DueDate == null)
             {
                 MessageBox.Show("Пожалуйста, заполните название и дату выполнения.");
                 return;
             }
 
-            ToDo newItem = new ToDo(title, dueDate.Value, description);
+            ToDo NewItem = new ToDo(Title, DueDate.Value, Description);
 
-            todoList.Add(newItem);
+            ToDoList.Add(NewItem);
 
             TitleTextBox.Text = null;
             DueDatePicker.SelectedDate = null;
@@ -54,11 +53,11 @@ namespace WPFhometask4
 
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
-            ToDo selectedItem = TaskListListBox.SelectedItem as ToDo;
+            ToDo SelectedItem = TaskListListBox.SelectedItem as ToDo;
 
-            if (selectedItem != null)
+            if (SelectedItem != null)
             {
-                todoList.Remove(selectedItem);
+                ToDoList.Remove(SelectedItem);
                 UpdateTaskList();
             }
             else
@@ -80,7 +79,7 @@ namespace WPFhometask4
         private void UpdateTaskList()
         {
             TaskListListBox.ItemsSource = null;
-            TaskListListBox.ItemsSource = todoList;
+            TaskListListBox.ItemsSource = ToDoList;
         }
     }
 }

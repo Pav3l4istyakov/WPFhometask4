@@ -1,0 +1,21 @@
+﻿<Window x:Class="WPFhometask4.AddTaskWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WPFhometask4"
+        mc:Ignorable="d"
+        Title="AddTaskWindow" Height="450" Width="800" ResizeMode="NoResize"> 
+    <Grid>
+        <StackPanel Margin="10">
+            <TextBlock Text="Название"/>
+            <TextBlock Name ="TitleTextBox"/>
+            <TextBlock Text="Выполнить до"/>
+            <DatePicker Name="DueDatePicker"/>
+            <TextBlock Text="Описание:"/>
+            <TextBox Name="DescriptionTextBox" MinLines="3" MaxLines="5"/>
+            <Button Content="Сохранить дело"  Click="SaveButton_Click" Margin="0,10,0,0"/>
+        </StackPanel>
+         
+    </Grid>
+</Window>
