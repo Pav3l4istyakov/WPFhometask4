@@ -1,50 +1,41 @@
 ﻿<Window x:Class="WPFhometask4.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:WPFhometask4"
-        mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" Background="#FDF5DF">
+       Title="MainWindow" Height="430" Width="353" Background="#FFFDFAF1">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition/>
+            <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
-        <TextBlock Grid.Row="0" Grid.Column="0" Text="Список дел" FontSize="26" HorizontalAlignment="Center"/>
-        <ListBox Grid.Row="1" Grid.Column="0" Margin="5" Background="#FDF5DF" Name="TaskListListBox">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Margin="5">
-                        <TextBlock Text="{Binding CaseTitle}" FontSize="12" FontWeight="Bold"/>
-                        <TextBlock Text="{Binding CompletionDate_, StringFormat=dd.MM.yyyy}" FontSize="12"/>
-                        <TextBlock Text="{Binding Description}" FontSize="10" TextWrapping="Wrap"/>
-                    </StackPanel>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
 
-        <CheckBox Grid.Column="1" Grid.Row="0" Content="Добавление новых дел" VerticalAlignment="Bottom"
-                  Name="AddTasksCheckBox" Checked="AddTasksCheckBox_Checked" Unchecked="AddTasksCheckBox_Unchecked"/>
+        <TextBlock Grid.Row="0" Text="Список дел" FontSize="22" HorizontalAlignment="Left" Margin="10"/>
+        <Button Grid.Row="0" Margin="5" HorizontalAlignment="Right" VerticalAlignment="Top" Click="AddButton_Click">
+            <Image Source="Image/add.png" Width="20" Height="20" />
+        </Button>
 
-        <ScrollViewer Grid.Column="1" Grid.Row="1" Margin="5" Background="#FDF5DF" 
-            HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"
-                      Name="AddTasksPanel" Visibility="Collapsed">
-            <StackPanel Margin="5">
-                <TextBlock FontSize="12" Text="Название:"/>
-                <TextBox Margin="0,10" Name="TitleTextBox"/>
-                <TextBlock FontSize="12" Text="Выполнить до:"/>
-                <DatePicker Margin="0,10" Name="DueDatePicker"/>
-                <TextBlock FontSize="12" Text="Описание:"/>
-                <TextBox Margin="0, 10" MaxLines="10" MinLines="10" Name="DescriptionTextBox"/>
-            </StackPanel>
-        </ScrollViewer>
-        <Button Grid.Column="0" Grid.Row="2" Content="Удалить дело" Background="#5EBEC4" Height="30" Width="100" Margin="5" Click="DeleteButton_Click"/>
-        <Button Grid.Column="1" Grid.Row="2" Content="Добавить дело" Background="#5EBEC4" Height="30" Width="100" Margin="5" Click="AddButton_Click"/>
+        <DataGrid Grid.Row="1" Margin="5" Name="TaskListDataGrid" AutoGenerateColumns="False"
+                  ItemsSource="{Binding TodoList}">
+            <DataGrid.Columns>
+                <DataGridCheckBoxColumn Header="Выполнено" Binding="{Binding Doing}" Width="Auto"/>
+                <DataGridTextColumn Header="Название" Binding="{Binding Title}" Width="*" MaxWidth="10"/>
+                <DataGridTextColumn Header="Выполнить до" Binding="{Binding DueDate, StringFormat=d}" Width="Auto"/>
+                <DataGridTextColumn Header="Описание" Binding="{Binding Description}" Width="*" Visibility="Visible"/>
+                <DataGridTemplateColumn Width="Auto">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Click="DeleteButton_Click" Padding="0" Background="#5EBEC4" Foreground="Yellow">
+                                <Image Source="icon.png" Width="10" Height="10" Stretch="Uniform" />
+                            </Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Center" Margin="5">
+            <Button Content="Удалить дело" Background="#5EBEC4" Foreground="White" Padding="10" Margin="5" Click="DeleteSelectedTask_Click"/>
+            <Button Content="Добавить дело" Background="#5EBEC4" Foreground="White" Padding="10" Margin="5" Click="AddButton_Click"/>
+        </StackPanel>
     </Grid>
 </Window>

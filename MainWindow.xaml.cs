@@ -1,4 +1,5 @@
-﻿using System.Security.Cryptography.X509Certificates;
+﻿using System.Collections.ObjectModel;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -17,69 +18,66 @@ namespace WPFhometask4
     /// </summary>
     public partial class MainWindow : Window
     {
-        private List<ToDo> ToDoList = new List<ToDo>();
+        
+        public static  ObservableCollection<ToDo> TodoList { get; set; } = new ObservableCollection<ToDo>();
 
         public MainWindow()
         {
             InitializeComponent();
-            ToDoList.Add(new ToDo("Приготовить покушать", new DateTime(2024, 1, 15), "нет описания"));
-            ToDoList.Add(new ToDo("Поработать", new DateTime(2024, 1, 20), "Съездить на совещание в Москву"));
-            ToDoList.Add(new ToDo("Отдохнуть", new DateTime(2024, 2, 1), "Съездить в отпуск в Сочи"));
-            UpdateTaskList(); 
+            TodoList.Add(new ToDo("Приготовить покушать", new DateTime(2024, 1, 15), true, "Нет описания"));
+            TodoList.Add(new ToDo("Поработать", new DateTime(2024, 1, 20), false, "Съездить на совещание в Москву"));
+            TodoList.Add(new ToDo("Отдохнуть", new DateTime(2024, 2, 1), false, "Съездить в отпуск в Сочи"));
+            TodoList = new ObservableCollection<ToDo>(TodoList.OrderBy(x => x.DueDate));
+            TaskListDataGrid.ItemsSource = TodoList;
         }
 
-        private void AddButton_Click(object sender, RoutedEventArgs e) 
+        private void AddButton_Click(object sender, RoutedEventArgs e)
         {
-            string Title = TitleTextBox.Text;
-            DateTime? DueDate = DueDatePicker.SelectedDate;
-            string Description = DescriptionTextBox.Text;
-
-            if (string.IsNullOrEmpty(Title) || DueDate == null)
-            {
-                MessageBox.Show("Пожалуйста, заполните название и дату выполнения.");
-                return;
-            }
-
-            ToDo NewItem = new ToDo(Title, DueDate.Value, Description);
-
-            ToDoList.Add(NewItem);
-
-            TitleTextBox.Text = null;
-            DueDatePicker.SelectedDate = null;
-            DescriptionTextBox.Text = null;
-
-            UpdateTaskList();
+            AddToTask addToDoWindow = new AddToTask();
+            addToDoWindow.Owner = this;
+            addToDoWindow.Show();
         }
 
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
-            ToDo SelectedItem = TaskListListBox.SelectedItem as ToDo;
-
-            if (SelectedItem != null)
+            var button = sender as Button;
+            ToDo itemToRemove = button?.DataContext as ToDo;
+            if (itemToRemove != null)
             {
-                ToDoList.Remove(SelectedItem);
-                UpdateTaskList();
-            }
-            else
-            {
-                MessageBox.Show("Пожалуйста, выберите дело для удаления.", "Уведомление");
+                TodoList.Remove(itemToRemove);
             }
         }
 
-        private void AddTasksCheckBox_Checked(object sender, RoutedEventArgs e)
+        private void DeleteSelectedTask_Click(object sender, RoutedEventArgs e)
         {
-            AddTasksPanel.Visibility = Visibility.Visible;
+          
+            var selectedItem = TaskListDataGrid.SelectedItem as ToDo;
+
+
+            if (selectedItem != null)
+            {
+                
+                TodoList.Remove(selectedItem);
+            }
+        }
+        private void CheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            if (TaskListDataGrid.SelectedItem != null)
+            {
+                ToDo selectedTask = (ToDo)TaskListDataGrid.SelectedItem;
+                selectedTask.Doing = true;
+                TaskListDataGrid.Items.Refresh();
+            }
         }
 
-        private void AddTasksCheckBox_Unchecked(object sender, RoutedEventArgs e)
+        private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
         {
-            AddTasksPanel.Visibility = Visibility.Collapsed;
-        }
-
-        private void UpdateTaskList()
-        {
-            TaskListListBox.ItemsSource = null;
-            TaskListListBox.ItemsSource = ToDoList;
+            if (TaskListDataGrid.SelectedItem != null)
+            {
+                ToDo selectedTask = (ToDo)TaskListDataGrid.SelectedItem;
+                selectedTask.Doing = false;
+                TaskListDataGrid.Items.Refresh();
+            }
         }
     }
 }

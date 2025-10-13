@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -10,30 +11,26 @@ namespace WPFhometask4
 {
     public class ToDo
     {
-        private string caseTitle;
-        private DateTime completionDate;
-        private string caseDescription;
+        public string Title { get; set; }
+        public DateTime DueDate { get; set; }
+        public bool Doing { get; set; }
+        public string Description { get; set; }
 
-        public ToDo(string casetitle, DateTime completiondate, string casedescription)
+        public ToDo(string title, DateTime dueDate, bool doing, string description)
         {
-            this.caseTitle = casetitle;
-            this.completionDate = completiondate;
-            this.caseDescription = casedescription;
-        }
-
-        public string CaseTitle
-        {
-           get { return caseTitle; }
-        }
-
-        public DateTime CompletionDate_
-        {
-           get { return completionDate; }
-        }
-
-        public string Description
-        {
-           get { return caseDescription; }
+            Title = title;
+            DueDate = dueDate;
+            Doing = doing;
+            Description = description;
         }
     }
 }
+
+
+
+        
+       
+
+
+
+    
