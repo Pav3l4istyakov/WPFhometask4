@@ -1,4 +1,6 @@
 ﻿using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Windows;
@@ -23,13 +25,20 @@ namespace WPFhometask4
         public MainWindow()
         {
             InitializeComponent();
+
             TodoList.Add(new ToDo("Приготовить покушать", new DateTime(2024, 1, 15), true, "Нет описания"));
             TodoList.Add(new ToDo("Поработать", new DateTime(2024, 1, 20), false, "Съездить на совещание в Москву"));
             TodoList.Add(new ToDo("Отдохнуть", new DateTime(2024, 2, 1), false, "Съездить в отпуск в Сочи"));
+
+            foreach (var todoItem in TodoList)
+            {
+                todoItem.PropertyChanged += TodoItem_PropertyChanged;
+            }
+
             TodoList = new ObservableCollection<ToDo>(TodoList.OrderBy(x => x.DueDate));
             TaskListDataGrid.ItemsSource = TodoList;
 
-            EndToDo();
+            EndToDo(); // вызываем один раз для начальной инициализации
         }
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
@@ -46,6 +55,7 @@ namespace WPFhometask4
             if (itemToRemove != null)
             {
                 TodoList.Remove(itemToRemove);
+                
             }
         }
 
@@ -55,28 +65,16 @@ namespace WPFhometask4
             if (selectedItem != null)
             {
                 TodoList.Remove(selectedItem);
+                //EndToDo(); //Больше не вызываем тут
             }
         }
 
-        private void CheckBox_Checked(object sender, RoutedEventArgs e)
-        {
-            if (TaskListDataGrid.SelectedItem != null)
-            {
-                ToDo selectedTask = (ToDo)TaskListDataGrid.SelectedItem;
-                selectedTask.Doing = true;
-                TaskListDataGrid.Items.Refresh();
-                EndToDo(); 
-            }
-        }
 
-        private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
+        private void TodoItem_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (TaskListDataGrid.SelectedItem != null)
+            if (e.PropertyName == nameof(ToDo.Doing))
             {
-                ToDo selectedTask = (ToDo)TaskListDataGrid.SelectedItem;
-                selectedTask.Doing = false;
-                TaskListDataGrid.Items.Refresh();
-                EndToDo(); 
+                EndToDo();
             }
         }
 
