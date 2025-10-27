@@ -3,15 +3,34 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Добавить дело" Height="450" Width="400" ResizeMode="NoResize" Background="#FFFDFAF1">
     <Grid>
-        <StackPanel Margin="10">
-            <TextBlock Text="Название:" Margin="5"/>
-            <TextBox Name="TitleTextBox" Margin="5"/>
-            <TextBlock Text="Выполнить до:" Margin="5"/>
-            <DatePicker Name="DueDatePicker" Margin="5"/>
-            <TextBlock Text="Описание:" Margin="5"/>
-            <TextBox Name="DescriptionTextBox" Margin="5"/>
-            <Button Content="Сохранить дело" Margin="5" Background="#5EBEC4" Click="SaveButton_Click"/>
-        </StackPanel>
-    </Grid>
+    <StackPanel Margin="10">
+   <TextBlock Text="Добавить дело" Style="{StaticResource HeaderStyle}" HorizontalAlignment="Left" Margin="10"/>
+   <TextBlock Text="Название:" Margin="5"/>
+   <TextBox Name="TitleTextBox" Margin="5"/>
+   <TextBlock Text="Выполнить до:" Margin="5"/>
+   <DatePicker Name="DueDatePicker">
+   <DatePicker.Resources>
+   <Style TargetType="DatePicker">
+   <Setter Property="BorderThickness" Value="1.5"/>
+   <Setter Property="BorderBrush" Value="#5EBEC4"/>
+   <Setter Property="Background" Value="White"/>
+   <Setter Property="SelectedDateFormat" Value="Long"/>
+    <Setter Property="CalendarStyle">
+    <Setter.Value>
+    <Style TargetType="Calendar">
+    <Setter Property="BorderThickness" Value="1.5"/>
+    <Setter Property="BorderBrush" Value="#5EBEC4"/>
+  <Setter Property="Background" Value="#FFFDFAF1"/>
+  </Style>
+  </Setter.Value>
+  </Setter>
+ </Style>
+</DatePicker.Resources>
+ </DatePicker>
+   <TextBlock Text="Описание:" Margin="5"/>
+   <TextBox Name="DescriptionTextBox" Margin="5" AcceptsReturn="True" TextWrapping="Wrap" Height="100"/>
+   <Button Content="Сохранить дело" Margin="5" Background="#5EBEC4" Click="SaveButton_Click"/>
+  </StackPanel>
+  </Grid>
 </Window>
 

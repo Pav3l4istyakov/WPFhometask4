@@ -18,8 +18,7 @@ namespace WPFhometask4
     /// </summary>
     public partial class MainWindow : Window
     {
-        
-        public static  ObservableCollection<ToDo> TodoList { get; set; } = new ObservableCollection<ToDo>();
+        public static ObservableCollection<ToDo> TodoList { get; set; } = new ObservableCollection<ToDo>();
 
         public MainWindow()
         {
@@ -29,6 +28,8 @@ namespace WPFhometask4
             TodoList.Add(new ToDo("Отдохнуть", new DateTime(2024, 2, 1), false, "Съездить в отпуск в Сочи"));
             TodoList = new ObservableCollection<ToDo>(TodoList.OrderBy(x => x.DueDate));
             TaskListDataGrid.ItemsSource = TodoList;
+
+            EndToDo();
         }
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
@@ -50,16 +51,13 @@ namespace WPFhometask4
 
         private void DeleteSelectedTask_Click(object sender, RoutedEventArgs e)
         {
-          
             var selectedItem = TaskListDataGrid.SelectedItem as ToDo;
-
-
             if (selectedItem != null)
             {
-                
                 TodoList.Remove(selectedItem);
             }
         }
+
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
         {
             if (TaskListDataGrid.SelectedItem != null)
@@ -67,6 +65,7 @@ namespace WPFhometask4
                 ToDo selectedTask = (ToDo)TaskListDataGrid.SelectedItem;
                 selectedTask.Doing = true;
                 TaskListDataGrid.Items.Refresh();
+                EndToDo(); 
             }
         }
 
@@ -77,7 +76,19 @@ namespace WPFhometask4
                 ToDo selectedTask = (ToDo)TaskListDataGrid.SelectedItem;
                 selectedTask.Doing = false;
                 TaskListDataGrid.Items.Refresh();
+                EndToDo(); 
             }
         }
+
+        private void EndToDo()
+        {
+            TaskProgressBar.Minimum = 0;
+            TaskProgressBar.Maximum = TodoList.Count;
+            TaskProgressBar.Value = TodoList.Count(x => x.Doing);
+
+            ProgressText.Text = $"{TodoList.Count(x => x.Doing)} / {TodoList.Count}";
+        }
     }
+
 }
+

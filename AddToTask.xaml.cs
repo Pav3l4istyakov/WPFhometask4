@@ -20,8 +20,6 @@ namespace WPFhometask4
     /// </summary>
     public partial class AddToTask : Window
     {
-       
-
         public AddToTask()
         {
             InitializeComponent();

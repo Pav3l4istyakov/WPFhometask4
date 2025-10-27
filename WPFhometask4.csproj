@@ -16,7 +16,9 @@
 
   <ItemGroup>
     <Resource Include="Image\add.png" />
-    <Resource Include="Image\delete.png" />
+    <Resource Include="Image\delete.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Image\icon.png" />
   </ItemGroup>
 
