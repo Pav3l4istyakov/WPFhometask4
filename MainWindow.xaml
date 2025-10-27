@@ -17,53 +17,45 @@
         ItemsSource="{Binding TodoList}" RowBackground="White" AlternatingRowBackground="#FFFDFAF1"
         HorizontalGridLinesBrush="#5EBEC4" GridLinesVisibility="Horizontal" HeadersVisibility="None"
         CanUserAddRows="False" CanUserDeleteRows="False">
-            <DataGrid.Columns>
-                <DataGridCheckBoxColumn Header="Выполнено" Binding="{Binding Doing, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="Auto"/>
-                <DataGridTextColumn Header="Название" Binding="{Binding Title}" Width="*" MaxWidth="10"/>
-                <DataGridTextColumn Header="Выполнить до" Binding="{Binding DueDate, StringFormat=d}" Width="Auto"/>
-                <DataGridTemplateColumn Header="Описание" Width="*">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <ScrollViewer VerticalScrollBarVisibility="Auto" Height="75">
-                                <TextBlock Text="{Binding Description}" TextWrapping="Wrap"/>
-                            </ScrollViewer>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                <DataGridTemplateColumn Width="Auto">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <Button Click="DeleteButton_Click" Padding="0" Background="#5EBEC4">
-                                <Image Source="icon.png" Width="10" Height="10" Stretch="Uniform" />
-                            </Button>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-            </DataGrid.Columns>
-            <DataGrid.Resources>
-                <Style TargetType="{x:Type DataGridRow}">
-                    <Setter Property="Background" Value="White" />
-                    <Style.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" Value="#ADD8E6"/>
-                        </Trigger>
-                    </Style.Triggers>
-                </Style>
-            </DataGrid.Resources>
-        </DataGrid>
-        <StackPanel Grid.Row="3" Orientation="Vertical" HorizontalAlignment="Stretch" Margin="5">
-      <TextBlock Name="ProgressText" HorizontalAlignment="Center"/>
-      <ProgressBar Name="TaskProgressBar" Height="20">
-      <ProgressBar.Resources>
-       <Style TargetType="ProgressBar">
-       <Setter Property="Background" Value="#FFFDFAF1"/>
-       <Setter Property="Foreground" Value="#5EBEC4"/>
-        <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="BorderBrush" Value="#5EBEC4"/>
-         </Style>
-         </ProgressBar.Resources>
-        </ProgressBar>
-        </StackPanel>
+        <DataGrid.Columns>
+        <DataGridCheckBoxColumn Header="Выполнено" Binding="{Binding Doing}" Width="Auto"/>
+        <DataGridTextColumn Header="Название" Binding="{Binding Title}" Width="*" MaxWidth="10"/>
+        <DataGridTextColumn Header="Выполнить до" Binding="{Binding DueDate, StringFormat=d}" Width="Auto"/>
+        <DataGridTextColumn Header="Описание" Binding="{Binding Description}" Width="*" Visibility="Visible"/>
+        <DataGridTemplateColumn Width="Auto">
+        <DataGridTemplateColumn.CellTemplate>
+        <DataTemplate>
+        <Button Click="DeleteButton_Click" Padding="0" Background="#5EBEC4" Foreground="Yellow">
+        <Image Source="icon.png" Width="10" Height="10" Stretch="Uniform" />
+        </Button>
+        </DataTemplate>
+        </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
+        </DataGrid.Columns>
+       <DataGrid.Resources>
+       <Style TargetType="{x:Type DataGridRow}">
+       <Setter Property="Background" Value="White" />
+       <Style.Triggers>
+       <Trigger Property="IsMouseOver" Value="True">
+      <Setter Property="Background" Value="#ADD8E6"/>
+      </Trigger>
+      </Style.Triggers>
+      </Style>
+     </DataGrid.Resources>
+     </DataGrid>
+    <StackPanel Grid.Row="3" Orientation="Vertical" HorizontalAlignment="Stretch" Margin="5">
+   <TextBlock Name="ProgressText" HorizontalAlignment="Center"/>
+   <ProgressBar Name="TaskProgressBar" Height="20">
+        <ProgressBar.Resources>
+        <Style TargetType="ProgressBar">
+        <Setter Property="Background" Value="#FFFDFAF1"/>
+        <Setter Property="Foreground" Value="#5EBEC4"/>
+       <Setter Property="BorderThickness" Value="1"/>
+      <Setter Property="BorderBrush" Value="#5EBEC4"/>
+     </Style>
+     </ProgressBar.Resources>
+     </ProgressBar>
+     </StackPanel>
         <StackPanel Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Center" Margin="5">
         <Button Content="Удалить дело" Background="#5EBEC4" Foreground="White" Padding="10" Margin="5" Click="DeleteSelectedTask_Click"/>
         </StackPanel>

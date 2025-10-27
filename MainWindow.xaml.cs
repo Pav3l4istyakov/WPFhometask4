@@ -38,7 +38,7 @@ namespace WPFhometask4
             TodoList = new ObservableCollection<ToDo>(TodoList.OrderBy(x => x.DueDate));
             TaskListDataGrid.ItemsSource = TodoList;
 
-            EndToDo(); // вызываем один раз для начальной инициализации
+            EndToDo(); 
         }
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
@@ -65,7 +65,7 @@ namespace WPFhometask4
             if (selectedItem != null)
             {
                 TodoList.Remove(selectedItem);
-                //EndToDo(); //Больше не вызываем тут
+                
             }
         }
 
